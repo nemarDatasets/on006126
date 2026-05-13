@@ -1,0 +1,23 @@
+{
+  "version": "2.0",
+  "dataset_id": "on006126",
+  "source": "openneuro",
+  "source_id": "ds006126",
+  "title": "TDCS Modulation of Visual Cortex in Motor Imagery",
+  "authors": {
+    "Anthony Mensah": {},
+    "Gleb Perevoznyuk": {},
+    "Artyom Batov": {},
+    "Aleksandra S. Pleskovskaya": {}
+  },
+  "license": "CC0",
+  "dataset_type": "raw",
+  "related_identifiers": [
+    {
+      "identifier": "10.18112/openneuro.ds006126.v1.0.0",
+      "identifier_type": "DOI",
+      "relation_type": "IsIdenticalTo"
+    }
+  ],
+  "pipeline_stage": "seeded"
+}
