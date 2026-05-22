@@ -1,6 +1,6 @@
 {
   "Name": "TDCS Modulation of Visual Cortex in Motor Imagery",
-  "BIDSVersion": "1.7.0",
+  "BIDSVersion": "1.8.0",
   "DatasetType": "raw",
   "Authors": [
     "Anthony Mensah",
@@ -12,9 +12,7 @@
   "Funding": [
     "Insitute for Cognitive Neuroscience - Higher School of Economics"
   ],
-  "ReferencesAndLinks": [
-    "https://example.com/publication"
-  ],
+  "ReferencesAndLinks": [],
   "License": "CC0",
   "GeneratedBy": [
     {
@@ -24,16 +22,18 @@
         "Type": "docker",
         "Tag": "repronim/reproin:0.6.0"
       }
+    },
+    {
+      "Name": "nemar-cli",
+      "Version": "0.8.8",
+      "CodeURL": "https://github.com/nemar-org/nemar-cli"
     }
   ],
   "SourceDatasets": [
-    {
-      "Gimme": "https://example.com/source_dataset"
-    },
     {
       "DOI": "doi:10.18112/openneuro.ds006126.v1.0.0"
     }
   ],
   "DatasetDOI": "10.82901/nemar.on006126",
-  "Version": "1.0.0"
+  "Version": "1.0.2"
 }
