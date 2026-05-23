@@ -1,23 +1,97 @@
 {
   "version": "2.0",
-  "dataset_id": "on006126",
-  "source": "openneuro",
-  "source_id": "ds006126",
+  "pipeline_stage": "enriched",
   "title": "TDCS Modulation of Visual Cortex in Motor Imagery",
+  "license": "CC0",
+  "dataset_type": "raw",
   "authors": {
     "Anthony Mensah": {},
     "Gleb Perevoznyuk": {},
     "Artyom Batov": {},
     "Aleksandra S. Pleskovskaya": {}
   },
-  "license": "CC0",
-  "dataset_type": "raw",
   "related_identifiers": [
     {
       "identifier": "10.18112/openneuro.ds006126.v1.0.0",
       "identifier_type": "DOI",
-      "relation_type": "IsIdenticalTo"
+      "relation_type": "IsDerivedFrom"
+    },
+    {
+      "identifier": "https://github.com/nemarDatasets/on006126",
+      "identifier_type": "URL",
+      "relation_type": "IsDescribedBy"
+    },
+    {
+      "identifier": "https://nemar.org/dataexplorer/detail?dataset_id=on006126",
+      "identifier_type": "URL",
+      "relation_type": "IsDescribedBy"
+    },
+    {
+      "identifier": "10.21105/joss.01896",
+      "identifier_type": "DOI",
+      "relation_type": "IsDescribedBy"
+    },
+    {
+      "identifier": "10.1038/s41597-019-0104-8",
+      "identifier_type": "DOI",
+      "relation_type": "References"
     }
   ],
-  "pipeline_stage": "seeded"
+  "funding_references": [
+    {
+      "funder_name": "Insitute for Cognitive Neuroscience - Higher School of Economics"
+    },
+    {
+      "funder_name": "Institute for Cognitive Neuroscience, Higher School of Economics"
+    }
+  ],
+  "resource_type_general": "Dataset",
+  "modalities": [
+    "eeg"
+  ],
+  "resource_type_specific": "EEG Dataset",
+  "sizes": [
+    "1.2 GB (271 files)"
+  ],
+  "formats": [
+    ".eeg",
+    ".json",
+    ".md",
+    ".tsv",
+    ".vhdr",
+    ".vmrk",
+    ".yml"
+  ],
+  "description": "This dataset comprises EEG recordings from 5 participants performing motor imagery tasks under transcranial direct current stimulation (tDCS) neuromodulation targeting the visual cortex. Data were collected across 3 recording sessions using a Brain Products EEG system sampled at 5000 Hz, yielding 90 scans with a total of approximately 10.7 hours of recording. The study investigates the interaction between tDCS-induced neuromodulation and motor imagery-related brain activity, with potential applications in understanding cortical plasticity and brain-computer interfaces.",
+  "methods_description": "EEG data were recorded using a Brain Products system at 5000 Hz sampling rate with 60 Hz line noise present. Participants completed motor imagery tasks across 3 recording sessions. Data were organized and processed using MNE-BIDS (version 0.6.0) in compliance with BIDS 1.7.0 standards.",
+  "keywords": [
+    {
+      "term": "EEG"
+    },
+    {
+      "term": "motor imagery"
+    },
+    {
+      "term": "transcranial direct current stimulation"
+    },
+    {
+      "term": "tDCS"
+    },
+    {
+      "term": "visual cortex"
+    },
+    {
+      "term": "neuromodulation"
+    },
+    {
+      "term": "brain-computer interfaces"
+    },
+    {
+      "term": "cortical plasticity"
+    },
+    {
+      "term": "BIDS"
+    }
+  ],
+  "source_hash": "716e314e6a64a5d303387a559fc00f16e9593c59cae41147646e684f9a6576df"
 }
