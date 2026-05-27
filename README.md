@@ -29,12 +29,12 @@ Appelhoff, S., Sanderson, M., Brooks, T., Vliet, M., Quentin, R., Holdgraf, C., 
 Pernet, C. R., Appelhoff, S., Gorgolewski, K. J., Flandin, G., Phillips, C., Delorme, A., Oostenveld, R. (2019). EEG-BIDS, an extension to the brain imaging data structure for electroencephalography. Scientific Data, 6, 103.https://doi.org/10.1038/s41597-019-0104-8
 
 
-## NEMAR curation changes (2026-05-21)
+## NEMAR curation changes (2026-05-21, revised 2026-05-27)
 
-BIDS validator: 49 errors + 2252 warnings -> 0 errors + 1981 warnings. Raw `.eeg` / `.vhdr` / `.vmrk` binary payloads unchanged.
+BIDS validator: 49 errors + 2252 warnings -> 0 errors + 1981 warnings. Raw `.eeg` / `.vhdr` / `.vmrk` binary payloads unchanged. The `acq_time` timestamps in the `*_scans.tsv` files are preserved exactly as published (including the trailing `Z` UTC indicator, which is valid per the BIDS "date-time" type — an offset is optional, not forbidden).
 
-### `sub-*/ses-*/sub-*_ses-*_scans.tsv` (15 files)
-- Stripped trailing `Z` from `acq_time` timestamps (e.g. `1918-12-06T14:08:55.739331Z` -> `1918-12-06T14:08:55.739331`). Why: BIDS forbids the timezone indicator (UTC `Z` suffix or any other offset) in `acq_time` per the "date-time" type spec; MNE-BIDS 0.6 emitted the suffix on export, and the EEGDash loader was patching it on every read. Baking the fix in stops the loader from mutating the sidecar on each load.
+### `participants.tsv`
+- Dropped the `sub-AlBy15` row. Why: `participants.tsv` listed 6 participants but only 5 subject directories exist (`sub-AnSt01`, `sub-FeKl03`, `sub-IrCh04`, `sub-KiKo09`, `sub-SoNi11`); `sub-AlBy15` has no data directory in this dataset or in the OpenNeuro source (`ds006126`), so the row was a dangling reference to data that was never published. Removing it makes the participant table consistent with the subjects actually present. The true cohort is 5 participants (3 male, 2 female, all right-handed); the auto-generated BIDS Report block above was left unchanged and still reflects the original 6-row breakdown ("3 male and 3 female", "6 right hand").
 
 ### `sessions.tsv`
 - Rewrote `session_id` column from bare labels (`An`, `Ca`, `Sh`) to BIDS-canonical full entity form (`ses-An`, `ses-Ca`, `ses-Sh`) matching the on-disk `ses-<label>` directory names. Why: closes `TSV_VALUE_INCORRECT_TYPE:session_id` — BIDS requires the column cells to use the same form as the directory entity, not the bare label.
@@ -47,8 +47,7 @@ BIDS validator: 49 errors + 2252 warnings -> 0 errors + 1981 warnings. Raw `.eeg
 - Replaced empty cells in the `tms rmt` and `working amplitude` columns with `n/a`. Why: closes 48 `TSV_VALUE_INCORRECT_TYPE` errors (24 each for `tms rmt` and `working amplitude`) — BIDS rejects empty cells in numeric columns; `n/a` is the BIDS-canonical missing-data marker. Affected sessions are those without TMS application (the FeKl03 Anodal/Cathodal, IrCh04 Cathodal, and SoNi11 Sham runs), where these per-session calibration columns have no value to record. Numeric magnitudes for sessions with TMS (already filled, e.g. `63.0` / `70.0`) were untouched.
 
 ### `dataset_description.json`
-- Bumped `BIDSVersion` from `1.7.0` to `1.8.0`. Why: matches the validator schema in current use; `1.7.0` would otherwise eventually fire `UNKNOWN_BIDS_VERSION` against newer validator releases.
-- Appended `nemar-cli` to `GeneratedBy` alongside the original `mne-bids` entry. Why: documents the NEMAR rehost step in the dataset's provenance chain.
+- Bumped `BIDSVersion` from `1.7.0` to `1.11.1`. Why: set to the BIDS version of the validator the dataset was validated against (BIDS 1.11.1), so the declared conformance matches the schema it actually passed. The auto-generated BIDS Report block above still states the source's original "1.7.0" and was left unchanged.
 - Cleared the placeholder `ReferencesAndLinks: ["https://example.com/publication"]` to `[]`. Why: the URL was a placeholder, not a real reference; an empty array is preferable to a fake link.
 - Dropped the placeholder `SourceDatasets` entry `{"Gimme": "https://example.com/source_dataset"}` (also containing the unknown `Gimme` key); kept the genuine `{"DOI": "doi:10.18112/openneuro.ds006126.v1.0.0"}` entry. Why: the placeholder carried no information and used a non-BIDS field name.
 
