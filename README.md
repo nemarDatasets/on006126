@@ -31,29 +31,32 @@ Pernet, C. R., Appelhoff, S., Gorgolewski, K. J., Flandin, G., Phillips, C., Del
 
 ## NEMAR curation changes (2026-05-21, revised 2026-05-27)
 
-BIDS validator: 49 errors + 2252 warnings -> 0 errors + 1981 warnings. Raw `.eeg` / `.vhdr` / `.vmrk` binary payloads unchanged. The `acq_time` timestamps in the `*_scans.tsv` files are preserved exactly as published (including the trailing `Z` UTC indicator, which is valid per the BIDS "date-time" type — an offset is optional, not forbidden).
+The BIDS validator went from 49 errors + 2252 warnings to 0 errors + 1981 warnings. None of the raw recording files (`.eeg`, `.vhdr`, `.vmrk`) were touched — every change is to a text sidecar.
 
-### `participants.tsv`
-- Dropped the `sub-AlBy15` row. Why: `participants.tsv` listed 6 participants but only 5 subject directories exist (`sub-AnSt01`, `sub-FeKl03`, `sub-IrCh04`, `sub-KiKo09`, `sub-SoNi11`); `sub-AlBy15` has no data directory in this dataset or in the OpenNeuro source (`ds006126`), so the row was a dangling reference to data that was never published. Removing it makes the participant table consistent with the subjects actually present. The true cohort is 5 participants (3 male, 2 female, all right-handed); the auto-generated BIDS Report block above was left unchanged and still reflects the original 6-row breakdown ("3 male and 3 female", "6 right hand").
+**Participant table (`participants.tsv`)**
+- Removed the `sub-AlBy15` row. The table listed 6 participants, but only 5 subject folders are actually present (`sub-AnSt01`, `sub-FeKl03`, `sub-IrCh04`, `sub-KiKo09`, `sub-SoNi11`), and `sub-AlBy15` has no data here or in the OpenNeuro source — it pointed to a participant who was never published. Dropping the row makes the table match the subjects that exist. The real cohort is 5 participants (3 male, 2 female, all right-handed). The auto-generated BIDS Report block higher up in this README was left as-is and still describes the original 6-person breakdown.
 
-### `sessions.tsv`
-- Rewrote `session_id` column from bare labels (`An`, `Ca`, `Sh`) to BIDS-canonical full entity form (`ses-An`, `ses-Ca`, `ses-Sh`) matching the on-disk `ses-<label>` directory names. Why: closes `TSV_VALUE_INCORRECT_TYPE:session_id` — BIDS requires the column cells to use the same form as the directory entity, not the bare label.
+**Session table (`sessions.tsv`)**
+- Rewrote the `session_id` values from the bare labels (`An`, `Ca`, `Sh`) to the full BIDS form (`ses-An`, `ses-Ca`, `ses-Sh`) so they match the `ses-<label>` folder names on disk, which is what BIDS requires.
 
-### `sessions.json`
-- Added `session_id` column definition (descriptor only). Why: documents the new BIDS-canonical id format used in `sessions.tsv`.
-- Renamed key `posistive_electrode` -> `positive_electrode` to match the actual TSV header. Why: closes the `TSV_ADDITIONAL_COLUMNS_UNDEFINED:positive_electrode` warning — the original column definition was unreachable due to the misspelling, leaving the `positive_electrode` TSV column undocumented.
+**Session sidecar (`sessions.json`)**
+- Added a description for the `session_id` column, documenting the BIDS id format now used in `sessions.tsv`.
+- Fixed a misspelled key, `posistive_electrode`, to `positive_electrode` so it matches the actual column header in the TSV. Because of the typo, the original description never applied to the real column, leaving it undocumented.
 
-### `sub-{FeKl03,IrCh04,SoNi11}/ses-{An,Ca,Sh}/eeg/*_events.tsv` (24 files, 1320 rows total)
-- Replaced empty cells in the `tms rmt` and `working amplitude` columns with `n/a`. Why: closes 48 `TSV_VALUE_INCORRECT_TYPE` errors (24 each for `tms rmt` and `working amplitude`) — BIDS rejects empty cells in numeric columns; `n/a` is the BIDS-canonical missing-data marker. Affected sessions are those without TMS application (the FeKl03 Anodal/Cathodal, IrCh04 Cathodal, and SoNi11 Sham runs), where these per-session calibration columns have no value to record. Numeric magnitudes for sessions with TMS (already filled, e.g. `63.0` / `70.0`) were untouched.
+**Event tables (`tms rmt` and `working amplitude` columns, 24 `_events.tsv` files across `sub-{FeKl03,IrCh04,SoNi11}/ses-{An,Ca,Sh}`, 1320 rows total)**
+- Filled the empty cells in these two numeric columns with `n/a`, the standard BIDS marker for missing data — BIDS does not allow blank cells in numeric columns. The empty cells are all in the sessions that had no TMS applied (FeKl03 Anodal/Cathodal, IrCh04 Cathodal, SoNi11 Sham), so there was no calibration value to record. The sessions that did use TMS already had their numbers (e.g. `63.0` / `70.0`), and those were left untouched.
 
-### `dataset_description.json`
-- Bumped `BIDSVersion` from `1.7.0` to `1.11.1`. Why: set to the BIDS version of the validator the dataset was validated against (BIDS 1.11.1), so the declared conformance matches the schema it actually passed. The auto-generated BIDS Report block above still states the source's original "1.7.0" and was left unchanged.
-- Cleared the placeholder `ReferencesAndLinks: ["https://example.com/publication"]` to `[]`. Why: the URL was a placeholder, not a real reference; an empty array is preferable to a fake link.
-- Dropped the placeholder `SourceDatasets` entry `{"Gimme": "https://example.com/source_dataset"}` (also containing the unknown `Gimme` key); kept the genuine `{"DOI": "doi:10.18112/openneuro.ds006126.v1.0.0"}` entry. Why: the placeholder carried no information and used a non-BIDS field name.
+**Dataset description (`dataset_description.json`)**
+- `BIDSVersion` was `1.7.0`, older than what the validator checks against; set it to `1.11.1` so the declared version matches the schema the dataset now passes. The auto-generated BIDS Report block higher up still shows the original "1.7.0" and was left unchanged.
+- Cleared a placeholder reference: `ReferencesAndLinks` held `"https://example.com/publication"`, which is not a real link, so it was emptied rather than left pointing nowhere.
+- Removed a placeholder source entry, `{"Gimme": "https://example.com/source_dataset"}` — both the URL and the made-up `Gimme` field name were filler. The genuine source link (the OpenNeuro DOI `doi:10.18112/openneuro.ds006126.v1.0.0`) was kept.
 
-### All 90 `sub-*/ses-*/eeg/*_eeg.json`
-- Renamed the key `MiscChannelCount` -> `MISCChannelCount` (BIDS canonical spelling has all-uppercase MISC). Why: closes 270 `SIDECAR_KEY_RECOMMENDED:MISCChannelCount` warnings — the validator did not recognise the PascalCase spelling, so the `MISCChannelCount: 0` value that was already documented was treated as missing.
+**Recording sidecars (`_eeg.json`, all 90 recordings)**
+- The misc-channel-count field was spelled `MiscChannelCount`; BIDS uses all-uppercase `MISCChannelCount`. Renamed it (the value, `0`, was already correct) so the validator recognizes it.
 
-### Out of mechanical scope (left as warnings)
-- 1980 `SIDECAR_KEY_RECOMMENDED` warnings remain across `CogAtlasID`, `CogPOID`, `CapManufacturer`, `CapManufacturersModelName`, `HeadCircumference`, `HardwareFilters`, `SubjectArtefactDescription`, and `StimulusPresentation`. Per the NEMAR curation rule "never invent metadata", these require equipment/study context not documented in the existing dataset and are deferred to the original authors.
-- 1 `JSON_KEY_RECOMMENDED:HEDVersion` warning — the dataset does not use HED tags, so the field is optional.
+**Acquisition times (`scans.tsv`) — left exactly as published**
+- The `acq_time` timestamps still carry their original trailing `Z` (UTC) marker. This is valid BIDS — a time-zone offset is optional, not forbidden — so the timestamps were left unchanged.
+
+**Remaining warnings (1981) — left on purpose**
+- 1980 of these are "recommended but missing" fields that need information about the equipment or study that isn't in the dataset (for example: cognitive-atlas IDs, cap manufacturer and model, head circumference, hardware filters, artefact notes, and stimulus-presentation details). Following the rule "never invent metadata," they were left blank rather than filled with guesses, and are best supplied by the original authors.
+- The remaining 1 warning is a missing HED-version field; this dataset does not use HED tags, so the field is optional and left blank.
