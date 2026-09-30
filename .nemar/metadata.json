@@ -1,7 +1,9 @@
 {
   "version": "2.0",
-  "pipeline_stage": "enriched",
+  "pipeline_stage": "validated",
   "title": "TDCS Modulation of Visual Cortex in Motor Imagery",
+  "description": "EEG dataset investigating transcranial direct current stimulation (tDCS) modulation of visual cortex during motor imagery. Recordings were acquired with a Brain Products EEG system at 5000 Hz from a small group of healthy adult participants across three recording sessions. The dataset is organized in BIDS format.",
+  "methods_description": "EEG was recorded with a Brain Products system sampled at 5000 Hz with 60 Hz line noise, across 3 sessions and 90 scans in total. Recording durations ranged from about 364 to 2911 seconds per scan. The data were organized into BIDS using MNE-BIDS.",
   "license": "CC0",
   "dataset_type": "raw",
   "authors": {
@@ -10,6 +12,30 @@
     "Artyom Batov": {},
     "Aleksandra S. Pleskovskaya": {}
   },
+  "keywords": [
+    {
+      "term": "EEG"
+    },
+    {
+      "term": "motor imagery"
+    },
+    {
+      "term": "tDCS"
+    },
+    {
+      "term": "visual cortex"
+    },
+    {
+      "term": "Transcranial Direct Current Stimulation",
+      "subject_scheme": "MeSH",
+      "value_uri": "http://id.nlm.nih.gov/mesh/D065908"
+    },
+    {
+      "term": "Visual Cortex",
+      "subject_scheme": "MeSH",
+      "value_uri": "http://id.nlm.nih.gov/mesh/D014793"
+    }
+  ],
   "related_identifiers": [
     {
       "identifier": "10.18112/openneuro.ds006126.v1.0.0",
@@ -22,19 +48,19 @@
       "relation_type": "IsDescribedBy"
     },
     {
-      "identifier": "https://nemar.org/dataexplorer/detail?dataset_id=on006126",
-      "identifier_type": "URL",
-      "relation_type": "IsDescribedBy"
-    },
-    {
       "identifier": "10.21105/joss.01896",
       "identifier_type": "DOI",
-      "relation_type": "IsDescribedBy"
+      "relation_type": "References"
     },
     {
       "identifier": "10.1038/s41597-019-0104-8",
       "identifier_type": "DOI",
       "relation_type": "References"
+    },
+    {
+      "identifier": "https://nemar.org/dataset/on006126",
+      "identifier_type": "URL",
+      "relation_type": "IsDescribedBy"
     }
   ],
   "funding_references": [
@@ -42,16 +68,16 @@
       "funder_name": "Insitute for Cognitive Neuroscience - Higher School of Economics"
     },
     {
-      "funder_name": "Institute for Cognitive Neuroscience, Higher School of Economics"
+      "funder_name": "Institute for Cognitive Neuroscience - Higher School of Economics"
     }
   ],
   "resource_type_general": "Dataset",
+  "resource_type_specific": "EEG Dataset",
   "modalities": [
     "eeg"
   ],
-  "resource_type_specific": "EEG Dataset",
   "sizes": [
-    "1.2 GB (271 files)"
+    "1.08 GB (271 files)"
   ],
   "formats": [
     ".eeg",
@@ -61,37 +87,6 @@
     ".vhdr",
     ".vmrk",
     ".yml"
-  ],
-  "description": "This dataset comprises EEG recordings from 5 participants performing motor imagery tasks under transcranial direct current stimulation (tDCS) neuromodulation targeting the visual cortex. Data were collected across 3 recording sessions using a Brain Products EEG system sampled at 5000 Hz, yielding 90 scans with a total of approximately 10.7 hours of recording. The study investigates the interaction between tDCS-induced neuromodulation and motor imagery-related brain activity, with potential applications in understanding cortical plasticity and brain-computer interfaces.",
-  "methods_description": "EEG data were recorded using a Brain Products system at 5000 Hz sampling rate with 60 Hz line noise present. Participants completed motor imagery tasks across 3 recording sessions. Data were organized and processed using MNE-BIDS (version 0.6.0) in compliance with BIDS 1.7.0 standards.",
-  "keywords": [
-    {
-      "term": "EEG"
-    },
-    {
-      "term": "motor imagery"
-    },
-    {
-      "term": "transcranial direct current stimulation"
-    },
-    {
-      "term": "tDCS"
-    },
-    {
-      "term": "visual cortex"
-    },
-    {
-      "term": "neuromodulation"
-    },
-    {
-      "term": "brain-computer interfaces"
-    },
-    {
-      "term": "cortical plasticity"
-    },
-    {
-      "term": "BIDS"
-    }
   ],
   "source_hash": "716e314e6a64a5d303387a559fc00f16e9593c59cae41147646e684f9a6576df"
 }
