@@ -1,41 +1,44 @@
 {
-    "session_name": {
-        "Description": "Session name represent the tDCS type of stimulation undertaken during a particular session.",
-        "sessions": [
-            "Anodal",
-            "Cathodal",
-            "Sham"
-        ]
-    },
-    "intensity": {
-        "description": [
-            "1mA",
-            "-1mA",
-            "0mA"
-        ],
-        "units": [
-            "mA"
-        ]
-    },
-    "duration": {
-        "description": 21,
-        "units": [
-            "min"
-        ]
-    },
-    "posistive_electrode": {
-        "description": [
-            "V1"
-        ]
-    },
-    "negative_electrode": {
-        "description": [
-            "Left Clavicle"
-        ]
-    },
-    "protocol": {
-        "description": [
-            "9-3-9"
-        ]
-    }
+  "session_id": {
+    "Description": "Session identifier matching the on-disk ses-<label> directory."
+  },
+  "session_name": {
+    "Description": "Session name represent the tDCS type of stimulation undertaken during a particular session.",
+    "sessions": [
+      "Anodal",
+      "Cathodal",
+      "Sham"
+    ]
+  },
+  "intensity": {
+    "description": [
+      "1mA",
+      "-1mA",
+      "0mA"
+    ],
+    "units": [
+      "mA"
+    ]
+  },
+  "duration": {
+    "description": 21,
+    "units": [
+      "min"
+    ]
+  },
+  "negative_electrode": {
+    "description": [
+      "Left Clavicle"
+    ]
+  },
+  "protocol": {
+    "description": [
+      "9-3-9"
+    ]
+  },
+  "positive_electrode": {
+    "description": [
+      "V1"
+    ]
+  }
 }

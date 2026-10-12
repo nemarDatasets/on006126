@@ -1,4 +1,4 @@
 session_id	session_name	intensity	duration	positive_electrode	negative_electrode	protocol
-An	Anodal	1mA	21	V1	Left Clavicle	9-3-9
-Ca	Cathodal	-1mA	21	Left Clavicle	V1	9-3-9
-Sh	Sham	0mA	21	V1	Left Clavicle	9-3-9
+ses-An	Anodal	1mA	21	V1	Left Clavicle	9-3-9
+ses-Ca	Cathodal	-1mA	21	Left Clavicle	V1	9-3-9
+ses-Sh	Sham	0mA	21	V1	Left Clavicle	9-3-9
